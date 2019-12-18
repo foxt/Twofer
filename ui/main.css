@@ -1,3 +1,5 @@
+@import url("./img/fa/css/all.min.css");
+
 #lockIcon {
     position: fixed;
     width: 50vw;
@@ -67,4 +69,17 @@ h1 {
     position: fixed;
     left:10000vw;
     top:100000vh;
+}
+
+.iconsright {
+    text-align:right;
+    right: 0;
+    margin-left:auto;
+    margin-right:6px;
+    margin-top: -1em;
+    display: none;
+
+}
+.code:hover > .iconsright {
+    display: block;
 }

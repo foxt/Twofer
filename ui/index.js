@@ -9,6 +9,7 @@ var locked   = document.querySelector("#locked")
 var passwdBox= document.querySelector("#lockPasswd")
 
 function showLocked() {
+    //contents.innerHTML = ""
     passwdBox.disabled = false
     passwdBox.value = ""
     contents.style.opacity = "0"
@@ -54,21 +55,45 @@ ipcRenderer.on('wrongPassword',function(e,message) {
     document.querySelector("#passwdIncorrectText").innerText = message
 })
 
-function copyCode(elem) {
-    elem.querySelector("b").innerText = "Copied:"
+function copyText(text) {
     document.querySelector("#pasteSFX").play()
     var copyText = document.getElementById("copyInput");
-    copyText.value = elem.querySelector("h1").innerText
+    copyText.value = text
     copyText.select();
     copyText.setSelectionRange(0, 99999);
     document.execCommand("copy");
 }
 
+function copyCode(elem) {
+    elem.querySelector("b").innerText = "Copied:"
+    copyText(elem.querySelector("h1").innerText)
+}
+
+function deleteCode(code) {
+    console.log(code)
+    copyText(code)
+    setTimeout(function(){copyText(code)},100)
+    ipcRenderer.send("deleteCode",code)
+}
+
+function showQR(code) {
+    console.log(code)
+    copyText(code)
+    setTimeout(function(){copyText(code)},100)
+    ipcRenderer.send("showQR",code)
+}
+
 ipcRenderer.on('gotCodes',function(e,data) {
     var h = ``
     for (var code of data) {
-        h += `<div class="code" style="background-color: #${code.code}44"onmousedown="copyCode(this)">
-                <b>${code.name}</b>
+        var a = document.createElement("div")
+        a.innerText = code.name
+        h += `<div class="code" style="background-color: #${code.code}44" onmousedown="copyCode(this)">
+                <b><i class="fas fa-lock-alt"></i> ${a.innerHTML}</b>
+                <b class="iconsright">
+                    <i class="fas fa-trash" onmousedown="deleteCode('${code.secret}')"></i>
+                    <i class="fas fa-qrcode" onmousedown="showQR('${code.secret}')"></i>
+                </b>
                 <h1>${code.code}</h1>
             </div>`
     }

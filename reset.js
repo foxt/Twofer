@@ -1,0 +1,2 @@
+var vault = new (require("./vaultMgr"))("/Users/thelmgn/Library/Application Support/authbar",{"codes":[],"config":{}})
+vault.write({codes: [{secret: "NQT4OTOG75S6QOUI",name:"demo",icon:"none"}],config:{}}, "hunter2")
