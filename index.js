@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow,screen} = require('electron')
+const {app, BrowserWindow,screen,globalShortcut} = require('electron')
 const path = require('path')
+const fs =  require("fs")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -22,8 +23,10 @@ function createWindow () {
     skipTaskbar: true,
     fullScreenable: false,
     frame: false,
+    darkTheme:true,
     titleBarStyle: "customButtonsOnHover",
-    vibrancy: "dark"
+    vibrancy: "sheet",
+    //show: false
   })
   app.dock.hide();
   mainWindow.setAlwaysOnTop(true, "screen-saver");
@@ -32,8 +35,24 @@ function createWindow () {
 
   // and load the index.html of the app.
   mainWindow.loadFile('ui/index.html')
-  mainWindow.on("ready-to-show", function() {
-    mainWindow.show()
+
+  mainWindow.on("blur", function() {
+    mainWindow.hide()
+  })
+  globalShortcut.register('CommandOrControl+Shift+A', () => {
+    if (mainWindow.isVisible()) {
+      mainWindow.hide()
+    } else {
+      mainWindow.show()
+    }
   })
 }
 app.on('ready', createWindow)
+
+
+// debug reload
+fs.watch('.', function (event, filename) {
+  if (event == "change" && filename.endsWith(".js"))  {
+    process.exit()
+  }
+});

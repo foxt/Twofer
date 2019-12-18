@@ -50,10 +50,12 @@ class EncryptedDataStore {
         }
         this.data = json
         this.isLoaded = true
+        this.keyphrase = keyphrase
         return { success: true, data: json}
     }
-    write(keyphrase, data) {
-        this.data = data 
+    write(data,keyphrase) {
+        this.data = data || this.data
+        this.keyphrase = keyphrase || this.keyphrase
         try {
             if (!fs.existsSync(this.filelocation) || !fs.statSync(this.filelocation).isDirectory()) {
                 throw new Error(this.filelocation + " does not exist, or is not a directory.")
