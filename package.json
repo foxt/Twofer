@@ -21,6 +21,7 @@
   "homepage": "https://github.com/thelmgn/authbar#readme",
   "dependencies": {
     "crypto-js": "^3.1.9-1",
-    "electron": "^7.1.5"
+    "electron": "^7.1.5",
+    "speakeasy": "github:honzahommer/speakeasy"
   }
 }

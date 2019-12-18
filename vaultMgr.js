@@ -4,6 +4,7 @@ const path = require("path")
 
 class EncryptedDataStore {
     constructor(filelocation,defaults) {
+        console.log("[VaultMgr] Creating config object at location " + filelocation)
         this.defaults = defaults
         this.filelocation = filelocation
         var filePath = this.filePath = path.join(filelocation, "app_data.encryptedjson")
@@ -27,6 +28,7 @@ class EncryptedDataStore {
         if (!fs.existsSync(this.filePath)) {
             this.data = this.defaults
             this.isLoaded =true
+            this.keyphrase = keyphrase
             return { success: true, fileExists: false, data: this.defaults }
         }
         var text = ""
@@ -35,12 +37,20 @@ class EncryptedDataStore {
         } catch(e) {
             return {success: false, fileExists: false, reason: "The file failed to read." + e.toString()}
         }
-
-        var decrypted = CryptoJS.AES.decrypt(text, keyphrase);
+        try {
+            var decrypted = CryptoJS.AES.decrypt(text, keyphrase);
+        } catch(e) {
+            return {success: false, fileExists: true, reason: "The password entered was incorrect. (" + e.message + ")"}
+        }
         if (decrypted.sigBytes < 0) {
             return {success: false, fileExists: true, reason: "The password entered was incorrect. (" + decrypted.sigBytes + "sigBytes)"}
         }
-        var dString = decrypted.toString(CryptoJS.enc.Utf8);
+        
+        try {
+            var dString = decrypted.toString(CryptoJS.enc.Utf8);
+        } catch(e) {
+            return {success: false, fileExists: true, reason: "The password entered was incorrect. (" + e.message + ")"}
+        }
         console.log(dString)
         var json = {}
         try {
@@ -63,12 +73,12 @@ class EncryptedDataStore {
             if (fs.existsSync(this.filePath) && !fs.statSync(this.filePath).isFile()) {
                 throw new Error(this.filePath + " exists, but is not a file")
             }
-            var encrypted = CryptoJS.AES.encrypt(JSON.stringify(this.data), keyphrase);
+            var encrypted = CryptoJS.AES.encrypt(JSON.stringify(this.data), this.keyphrase);
             fs.writeFileSync(this.filePath, encrypted.toString(), {encoding: "utf8"})
             return {success: true}
         } catch(e) {
             console.error(e)
-            return this.write(keyphrase,data)   
+            return this.write(this.keyphrase,this.data)   
         }
     }
     destroy() {

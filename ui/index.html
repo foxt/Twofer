@@ -1,11 +1,19 @@
 <html>
     <head>
-
+        <title>Authbar</title>
+        <link rel="stylesheet" href="main.css"></link>
     </head>
     <body>
-        
-        <script>
+        <div id="locked">
+            <img src="img/icons/lock-alt.svg" id="lockIcon" />
+            <input type="password" id="lockPasswd" placeholder="hunter2" class="password input"></input>
+            <b id="passwdIncorrectText">Enter your password to continue. If you have not set one yet, and this is your first time using AuthBar, use the password you intend to use.</b>
+        </div>
+        <div id="contents">
             
-        </script>
+        </div>
+        <audio src="img/audio/paste.mp3" id="pasteSFX"></audio>
+        <input type="text" id="copyInput"></input>
+        <script src="index.js"></script>
     </body>
 </html>

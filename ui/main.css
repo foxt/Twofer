@@ -1,0 +1,70 @@
+#lockIcon {
+    position: fixed;
+    width: 50vw;
+    height: 50vw;
+    top: calc(50vh - 40vw);
+    left: 25vw;
+}
+#lockPasswd {
+    position: fixed;
+    width: 75vw;
+    top: calc(50vh + 20vw);
+    left: 12.5vw;
+}
+#passwdIncorrectText {
+    position: fixed;
+    width: 75vw;
+    top: calc(50vh + 35vw);
+    font-family: sans-serif;
+    color: hsl(348, 100%, 61%);
+    left: 12.5vw;
+}
+input {
+    border:  none;
+    box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.47);
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+    margin: 0 0 0 0;
+    font-size: 150%;
+    padding: 10px;
+}
+::-webkit-input-placeholder {
+    color: #aaa;
+}
+
+#contents {
+    transition: 0.5s opacity;
+    padding: 8px;
+    user-select: none;
+    pointer-events: all;
+}
+#locked {
+    transition: 0.5s opacity, 0.5s transform;
+    transform-origin: center;
+    position: fixed;
+    width: 100vw;
+    height:100vh;
+    top:0;
+    left:0;
+    user-select: none;
+    pointer-events: all;
+}
+.code {
+    min-width: calc(100vw - 48px);
+    padding: 8px;
+    background: #2226;
+    border-radius: 5px;
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 125%;
+}
+h1 {
+    margin: 0px;
+    font-size: 300%;
+    text-align: center;
+}
+#copyInput {
+    position: fixed;
+    left:10000vw;
+    top:100000vh;
+}
