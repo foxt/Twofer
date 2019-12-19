@@ -99,6 +99,30 @@ ipcMain.on("showQR",function(e,secret) {
   }
 })
 
+var icons = []
+
+ipcMain.on('iconSearch', (event, arg) => {
+  console.log("[IconSrc]", arg)
+  if (icons.length < 1) {
+    console.log("[IconSrc] Loading icon list...")
+    icons = fs.readdirSync("./ui/img/icons")
+    console.log("[IconSrc]",icons.length,"icons")
+  }
+  var returnValue = []
+  for (var ico of icons) {
+    if (ico.toLowerCase().replace(/-/g,"").startsWith(arg.replace(/-/g,"").replace(/_/g,"").replace(/ /g,""))) {
+      console.log(ico)
+      returnValue.push(ico)
+      if (returnValue.length > 100) { // prevent thread from running too long
+        event.returnValue = returnValue
+        return event.returnValue
+      }
+    }
+  }
+  event.returnValue = returnValue
+  return event.returnValue
+})
+
 // debug reload
 function killProcess(event, filename) {
   console.log(event,filename)
