@@ -52,6 +52,7 @@ input {
     pointer-events: all;
 }
 .code {
+    margin-bottom: 8px; 
     padding: 8px;
     background: #2226;
     border-radius: 5px;
@@ -96,4 +97,7 @@ h1 {
     background-repeat: no-repeat;
     background-position: right;
     opacity: 0.4;
+}
+::-webkit-scrollbar {
+    display: none;
 }

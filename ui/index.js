@@ -98,5 +98,13 @@ ipcRenderer.on('gotCodes',function(e,data) {
                 <h1>${code.code}</h1>
             </div>`
     }
-    contents.innerHTML = h
+    document.querySelector("#codes").innerHTML = h
 })
+
+function addCode() {
+    ipcRenderer.send("addCode",{
+        secret: document.querySelector("#addSecret").value,
+        name:document.querySelector("#addName").value,
+        icon:document.querySelector("#addSVG").value
+    })
+}

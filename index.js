@@ -132,6 +132,12 @@ ipcMain.on('iconSearch', (event, arg) => {
   return event.returnValue
 })
 
+ipcMain.on("addCode",function(e,data) {
+  if (!vault.isLoaded) {return}
+  vault.data.codes.push(data)
+  vault.write(vault.data)
+})
+
 // debug reload
 function killProcess(event, filename) {
   console.log(event,filename)
@@ -141,3 +147,4 @@ function killProcess(event, filename) {
 }
 fs.watch('.', killProcess);
 fs.watch('./ui', killProcess);
+
