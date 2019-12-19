@@ -20,18 +20,26 @@ function lock() {
 
 function generateCodes() {
   if (!vault.isLoaded) { return }
+  if (mainWindow.webContents.isDevToolsOpened()) { 
+    mainWindow.webContents.executeJavaScript("console.warn('%cHey you!','font-size:300%');console.warn('Don't paste anything here, it may give hackers access to every account added to AuthBar(!!).\n\nAlso, code generation and hide on unfocus is disabled while devtools are opened')")
+    return
+  }
   var codes = []
   for (var code of vault.data.codes) {
     console.log(code)
-    codes.push({
-      name: code.name,
-      icon: code.icon,
-      secret: code.secret,
-      code: speakeasy.totp({
-        secret: code.secret,
-        encoding: 'base32',
+    try {
+      codes.push({
+        name: code.name,
+        icon: code.icon,
+        secret: code.secret,
+        code: speakeasy.totp({
+          secret: code.secret,
+          encoding: 'base32',
+        })
       })
-    })
+    } catch(e) {
+      console.error("Failed to generate code")
+    }
   }
   mainWindow.webContents.send("gotCodes", codes)
 }
@@ -40,6 +48,7 @@ const createWindow = require("./createWindow")
 app.on('ready', function() {
   mainWindow = createWindow()
   mainWindow.on("blur", function() {
+    if (mainWindow.webContents.isDevToolsOpened()) { return }
     mainWindow.hide()
     lock()
   })

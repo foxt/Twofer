@@ -52,18 +52,22 @@ input {
     pointer-events: all;
 }
 .code {
-    min-width: calc(100vw - 48px);
     padding: 8px;
     background: #2226;
     border-radius: 5px;
     color: #fff;
     font-family: sans-serif;
     font-size: 125%;
+    display:block;
+    max-height: 4.5em;
+    min-height: 4.5em;
+    min-width: calc(100vw - 48px);
+    max-width: calc(100vw - 48px);
+    overflow:hidden;
 }
 h1 {
     margin: 0px;
     font-size: 300%;
-    text-align: center;
 }
 #copyInput {
     position: fixed;
@@ -75,11 +79,21 @@ h1 {
     text-align:right;
     right: 0;
     margin-left:auto;
-    margin-right:6px;
+    margin-right:26px;
     margin-top: -1em;
     display: none;
-
+    position: absolute;
 }
 .code:hover > .iconsright {
     display: block;
+}
+.codeImageContainer {
+    position: absolute;
+    max-height: 4.5em;
+    min-height: 4.5em;
+    min-width: calc(100vw - 48px);
+    max-width: calc(100vw - 48px);
+    background-repeat: no-repeat;
+    background-position: right;
+    opacity: 0.4;
 }

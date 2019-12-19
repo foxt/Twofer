@@ -89,7 +89,8 @@ ipcRenderer.on('gotCodes',function(e,data) {
         var a = document.createElement("div")
         a.innerText = code.name
         h += `<div class="code" style="background-color: #${code.code}44" onmousedown="copyCode(this)">
-                <b><i class="fas fa-lock-alt"></i> ${a.innerHTML}</b>
+                <div class="codeImageContainer" style="background-image: url('./img/icons/${code.icon}')"></div>
+                <b> ${a.innerHTML}</b>
                 <b class="iconsright">
                     <i class="fas fa-trash" onmousedown="deleteCode('${code.secret}')"></i>
                     <i class="fas fa-qrcode" onmousedown="showQR('${code.secret}')"></i>
