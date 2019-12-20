@@ -9,7 +9,7 @@ var locked   = document.querySelector("#locked")
 var passwdBox= document.querySelector("#lockPasswd")
 
 function showLocked() {
-    //contents.innerHTML = ""
+    document.querySelector("#codes").innerHTML = ""
     passwdBox.disabled = false
     passwdBox.value = ""
     contents.style.opacity = "0"
@@ -89,7 +89,7 @@ ipcRenderer.on('gotCodes',function(e,data) {
         var a = document.createElement("div")
         a.innerText = code.name
         h += `<div class="code" style="background-color: #${code.code}44" onmousedown="copyCode(this)">
-                <div class="codeImageContainer" style="background-image: url('./img/icons/${code.icon}')"></div>
+                <div class="codeImageContainer" style="background-image: url('./img/icons/${code.icon}')"></div>\
                 <b> ${a.innerHTML}</b>
                 <b class="iconsright">
                     <i class="fas fa-trash" onmousedown="deleteCode('${code.secret}')"></i>
@@ -102,9 +102,41 @@ ipcRenderer.on('gotCodes',function(e,data) {
 })
 
 function addCode() {
+    if (
+        document.querySelector("#addSecret").value.trim().length < 1 ||
+        document.querySelector("#addName").value.trim().length < 1 ||
+        document.querySelector("#addSVG").value.trim().length < 1
+        ) {
+        return
+    }
     ipcRenderer.send("addCode",{
-        secret: document.querySelector("#addSecret").value,
-        name:document.querySelector("#addName").value,
-        icon:document.querySelector("#addSVG").value
+        secret: document.querySelector("#addSecret").value.trim(),
+        name:document.querySelector("#addName").value.trim(),
+        icon:document.querySelector("#addSVG").value.trim()
     })
+    document.querySelector("#addSecret").value = ""
+    document.querySelector("#addName").value = ""
+    document.querySelector("#addSVG").value = "lock-alt.svg"
+    document.querySelector("#addSVGSearch").value = ""
+    document.querySelector("#svgsearchResults").innerHTML = ""
+}
+function searchIcon(s) {
+    var icons = ipcRenderer.sendSync("iconSearch",s.value)
+    icons = icons.sort(function(a,b) {
+        return a.length - b.length
+    })
+    var h = ``
+    for (var icon of icons) {
+        h += `<img src='./img/icons/${icon}' width='40' height='40' onclick='setIcon("${icon}")'>`
+    }
+    if (icons.length >= 247) {
+        h += "<br>Results have been limited to 250 icons for performance, refine your search query if you don't see the icon you want."
+    }
+    document.querySelector("#svgsearchResults").innerHTML = h
+}
+
+function setIcon(icon) {
+    document.querySelector("#addSVG").value = icon
+    document.querySelector("#addSVGSearch").value = icon.replace(".svg","")
+    searchIcon({value:icon.replace(".svg","")})
 }

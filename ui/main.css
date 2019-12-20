@@ -101,3 +101,40 @@ h1 {
 ::-webkit-scrollbar {
     display: none;
 }
+#addcard {
+    text-align: center;
+    max-height: 70px;
+    min-height: 70px;
+    box-shadow: 0.5s max-height;
+}
+#addcard > input {
+    box-shadow: none;
+    transition: 0.25s box-shadow;
+}
+#addcard:hover > input {
+    /*box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.47);*/
+    margin-top: 8px
+}
+#addcard:hover > img {
+    display: none;
+}
+#addcard:hover {
+    max-height: 100vh;
+}
+.addImg {
+    margin-bottom: 8px;
+}
+button {
+    border:  none;
+    box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.47);
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+    margin: 0 0 0 0;
+    font-size: 150%;
+    padding: 10px;
+    margin:8px;
+}
+#svgsearchResults {
+    max-height: 400px;
+    overflow: scroll;
+}

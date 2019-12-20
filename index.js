@@ -26,7 +26,6 @@ function generateCodes() {
   }
   var codes = []
   for (var code of vault.data.codes) {
-    console.log(code)
     try {
       codes.push({
         name: code.name,
@@ -119,10 +118,10 @@ ipcMain.on('iconSearch', (event, arg) => {
   }
   var returnValue = []
   for (var ico of icons) {
-    if (ico.toLowerCase().replace(/-/g,"").startsWith(arg.replace(/-/g,"").replace(/_/g,"").replace(/ /g,""))) {
-      console.log(ico)
+    if (ico.endsWith(".svg") && ico.toLowerCase().replace(/-/g,"").startsWith(arg.replace(/-/g,"").replace(/_/g,"").replace(/ /g,""))) {
+      //console.log(ico)
       returnValue.push(ico)
-      if (returnValue.length > 100) { // prevent thread from running too long
+      if (returnValue.length > 247) { // prevent thread from running too long
         event.returnValue = returnValue
         return event.returnValue
       }

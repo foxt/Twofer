@@ -13,12 +13,14 @@
             <div id="codes">
 
             </div>
-            <div class="code" style="max-height:100vh;">
-                <b>Add Code WIP UI</b>
+            <div class="code" id="addcard" >
+                <img src="./img/icons/plus-circle.svg" height="70px" class="addImg"></img>
                 <input type="text" id="addName" placeholder="Google"></input>
                 <input type="text" id="addSecret" placeholder="SecretGoesHere"></input>
-                <input type="text" id="addSVG" placeholder="svg file"></input>
-                <button onclick="addCode()">Add</button>
+                <input type="text" id="addSVG" style="display:none" disabled value="lock-alt.svg" placeholder="svg file"></input>
+                <input type="text" id="addSVGSearch" onkeyup="searchIcon(this)" placeholder="Search for icon"></input>
+                <div id="svgsearchResults"></div>
+                <button onclick="addCode()"><i class="far fa-plus"></i></button>
             </div>
         </div>
         <audio src="img/audio/paste.mp3" id="pasteSFX"></audio>
