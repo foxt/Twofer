@@ -1,6 +1,6 @@
 # Twofer [beta]
 
-Twofer (too-fer) is a TOTP code generator for the desktop. Currently, the beta is only available for macOS, however I'm working on bringing it to Linux and Windows soon.
+Twofer (pronounced too-fer)  is a TOTP code generator for the desktop. Currently, the beta is only available for macOS, however I'm working on bringing it to Linux and Windows soon.
 
 ## How to use Twofer:
 
