@@ -21,7 +21,7 @@ function lock() {
 function generateCodes() {
   if (!vault.isLoaded) { return }
   if (mainWindow.webContents.isDevToolsOpened()) { 
-    mainWindow.webContents.executeJavaScript("console.warn('%cHey you!','font-size:300%');console.warn('Don't paste anything here, it may give hackers access to every account added to AuthBar(!!).\n\nAlso, code generation and hide on unfocus is disabled while devtools are opened')")
+    mainWindow.webContents.executeJavaScript("console.warn('%cHey you!','font-size:300%');console.warn('Don't paste anything here, it may give hackers access to every account added to Twofer(!!).\n\nAlso, code generation and hide on unfocus is disabled while devtools are opened')")
     return
   }
   var codes = []
@@ -92,7 +92,6 @@ ipcMain.on("showQR",function(e,secret) {
   for (var arr of vault.data.codes) {
     if (arr.secret == secret) {
       var url = `otpauth://totp/${encodeURIComponent(arr.name)}?secret=${arr.secret}&algorithm=SHA1&digits=6&period=30`
-      console.log(url)
       qr.toDataURL(url, function (err, url) {
         new BrowserWindow({
           width: 196,
@@ -110,7 +109,6 @@ ipcMain.on("showQR",function(e,secret) {
 var icons = []
 
 ipcMain.on('iconSearch', (event, arg) => {
-  console.log("[IconSrc]", arg)
   if (icons.length < 1) {
     console.log("[IconSrc] Loading icon list...")
     icons = fs.readdirSync("./ui/img/icons")
@@ -119,7 +117,6 @@ ipcMain.on('iconSearch', (event, arg) => {
   var returnValue = []
   for (var ico of icons) {
     if (ico.endsWith(".svg") && ico.toLowerCase().replace(/-/g,"").startsWith(arg.replace(/-/g,"").replace(/_/g,"").replace(/ /g,""))) {
-      //console.log(ico)
       returnValue.push(ico)
       if (returnValue.length > 247) { // prevent thread from running too long
         event.returnValue = returnValue
@@ -139,7 +136,6 @@ ipcMain.on("addCode",function(e,data) {
 
 // debug reload
 function killProcess(event, filename) {
-  console.log(event,filename)
   if (event == "change" && (filename.endsWith(".js") || filename.endsWith(".css") || filename.endsWith(".html")))  {
     process.exit()
   }

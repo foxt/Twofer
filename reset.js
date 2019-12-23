@@ -1,4 +1,4 @@
-var vault = new (require("./vaultMgr"))("/Users/thelmgn/Library/Application Support/authbar",{"codes":[],"config":{}})
+var vault = new (require("./vaultMgr"))("/Users/thelmgn/Library/Application Support/Twofer",{"codes":[],"config":{}})
 
 var codes = []
 var i = 0

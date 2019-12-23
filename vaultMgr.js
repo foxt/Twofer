@@ -8,8 +8,12 @@ class EncryptedDataStore {
         this.defaults = defaults
         this.filelocation = filelocation
         var filePath = this.filePath = path.join(filelocation, "app_data.encryptedjson")
-        if (!fs.existsSync(filelocation) || !fs.statSync(filelocation).isDirectory()) {
-            throw new Error(filelocation + " does not exist, or is not a directory.")
+        if (!fs.existsSync(filelocation)) {
+            console.log("[VaultMgr] Trying to create folder at '"+ filelocation + "'")
+            fs.mkdirSync(filelocation)
+        }
+        if (!fs.statSync(filelocation).isDirectory()) {
+            throw new Error(filelocation + " is not a directory.")
         }
         if (fs.existsSync(filePath) && !fs.statSync(filePath).isFile()) {
             throw new Error(filePath + " exists, but is not a file")
@@ -51,7 +55,6 @@ class EncryptedDataStore {
         } catch(e) {
             return {success: false, fileExists: true, reason: "The password entered was incorrect. (" + e.message + ")"}
         }
-        console.log(dString)
         var json = {}
         try {
             json = JSON.parse(dString)
