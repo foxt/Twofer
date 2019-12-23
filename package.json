@@ -1,6 +1,6 @@
 {
-  "name": "Twofer",
-  "version": "1.0.0",
+  "name": "twofer",
+  "version": "1.0.1",
   "description": "2fa applicaton for the desktop",
   "main": "index.js",
   "scripts": {

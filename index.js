@@ -135,11 +135,14 @@ ipcMain.on("addCode",function(e,data) {
 })
 
 // debug reload
-function killProcess(event, filename) {
-  if (event == "change" && (filename.endsWith(".js") || filename.endsWith(".css") || filename.endsWith(".html")))  {
-    process.exit()
+try {
+  function killProcess(event, filename) {
+    if (event == "change" && (filename.endsWith(".js") || filename.endsWith(".css") || filename.endsWith(".html")))  {
+      process.exit()
+    }
   }
+  fs.watch('.', killProcess);
+  fs.watch('./ui', killProcess);
+} catch(e) {
+  console.error("Failed to watch development files, assuming we're in production")
 }
-fs.watch('.', killProcess);
-fs.watch('./ui', killProcess);
-
