@@ -15,5 +15,7 @@ Twofer (pronounced too-fer)  is a TOTP code generator for the desktop. Currently
 Secrets can be exported individually by clicking on the QR button when you hover over a code. To sync the Twofer database, copy the `app_data.encryptedjson` from the path below to the machine you want to sync to. The password must be the same on both machines.
 
 **Windows:** %localappdata%\Twofer
+
 **macOS:** ~/Library/Application Support/Twofer
+
 **Linux:** ~/.config/Twofer
